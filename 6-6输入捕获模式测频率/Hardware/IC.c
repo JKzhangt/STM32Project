@@ -43,7 +43,7 @@ void IC_Init(void)
 
 uint32_t IC_GetFreq(void)//Get
 {
-	return 1000000 /TIM_GetCapture1((TIM3)+1);
+	return 1000000 /(TIM_GetCapture1(TIM3)+1);
 
 
 }
