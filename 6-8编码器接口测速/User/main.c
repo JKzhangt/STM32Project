@@ -6,7 +6,7 @@
 #include "Timer.h"
 #include "Encoder.h"
 
-uint16_t Speed;
+int16_t Speed;
 int main(void)
 {
 	OLED_Init();
@@ -21,7 +21,7 @@ int main(void)
 	{
 		
 		OLED_ShowSignedNum(1,7,Speed,5);
-		Delay_ms(1000);
+		
 		//可以试一试下面代码
 		//OLED_ShowNum(2,5,TIM_GetCounter(TIM2),5);
 	}
