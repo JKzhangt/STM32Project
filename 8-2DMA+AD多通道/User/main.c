@@ -18,7 +18,6 @@ int main(void)
 
 	while(1)
 	{
-		AD_GetValue();
 		
 		OLED_ShowNum(1,5,AD_Value[0],4);
 		OLED_ShowNum(2,5,AD_Value[1],4);

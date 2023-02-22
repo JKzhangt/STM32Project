@@ -21,7 +21,7 @@ void AD_Init(void)
 	ADC_RegularChannelConfig(ADC1,ADC_Channel_3,4,ADC_SampleTime_55Cycles5);
 	
 	ADC_InitTypeDef ADC_InitStructure;
-	ADC_InitStructure.ADC_ContinuousConvMode=DISABLE;
+	ADC_InitStructure.ADC_ContinuousConvMode=ENABLE;
 	ADC_InitStructure.ADC_DataAlign=ADC_DataAlign_Right;
 	ADC_InitStructure.ADC_ExternalTrigConv=ADC_ExternalTrigConv_None;
 	ADC_InitStructure.ADC_Mode=ADC_Mode_Independent;
@@ -37,7 +37,7 @@ void AD_Init(void)
 	DMA_InitStructure.DMA_MemoryBaseAddr=(uint32_t)AD_Value;
 	DMA_InitStructure.DMA_MemoryDataSize=DMA_MemoryDataSize_HalfWord;
 	DMA_InitStructure.DMA_MemoryInc=DMA_MemoryInc_Enable;
-	DMA_InitStructure.DMA_Mode=DMA_Mode_Normal;
+	DMA_InitStructure.DMA_Mode=DMA_Mode_Circular;
 	DMA_InitStructure.DMA_PeripheralBaseAddr=(uint32_t)&ADC1->DR;
 	DMA_InitStructure.DMA_PeripheralDataSize=DMA_PeripheralDataSize_HalfWord;
 	DMA_InitStructure.DMA_PeripheralInc=DMA_PeripheralInc_Disable;
@@ -52,19 +52,8 @@ void AD_Init(void)
 	while(ADC_GetResetCalibrationStatus(ADC1) == SET);
 	ADC_StartCalibration(ADC1);
 	while(ADC_GetCalibrationStatus(ADC1) == SET);
-	
+	ADC_SoftwareStartConvCmd(ADC1,ENABLE);
 	
 }
 
-void AD_GetValue(void)
-{
-	DMA_Cmd(DMA1_Channel1,DISABLE);
-	DMA_SetCurrDataCounter(DMA1_Channel1,4);
-	DMA_Cmd(DMA1_Channel1,ENABLE);
-	
-	ADC_SoftwareStartConvCmd(ADC1,ENABLE);
-	
-	while(DMA_GetFlagStatus(DMA1_FLAG_TC1)==RESET);
-	DMA_ClearFlag(DMA1_FLAG_TC1);
-}
 
